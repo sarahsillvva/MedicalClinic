@@ -9,6 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PatientDto {
+
 	private Long id;
 	
 	private String name;
@@ -17,10 +18,12 @@ public class PatientDto {
 	
 	private Date dtCreation;
 	
-	private Date dtNasc;
+	private Date dtBirth;
 	
 	private String address;
 
+	private String phone;
+	
 	public PatientDto() {
 		super();
 	}
@@ -30,8 +33,10 @@ public class PatientDto {
 		this.name = patient.getName();
 		this.cpf = patient.getCpf();
 		this.dtCreation = patient.getDtCreation();
-		this.dtNasc = patient.getDtNasc();
+		this.dtBirth = patient.getDtBirth();
 		this.address = patient.getAddress();
+		this.phone = patient.getPhone();
+
 	}
 	
 	

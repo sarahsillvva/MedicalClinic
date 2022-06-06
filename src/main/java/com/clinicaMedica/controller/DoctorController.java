@@ -27,13 +27,6 @@ public class DoctorController {
 	
 	
 	
-	@PostMapping
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public DoctorDto registerDoctor(@RequestBody DoctorDto doctorDto) {
-		return doctorService.registerDoctor(doctorDto);
-	}
-	
-	
 	//Search list of all Doctors
 	@GetMapping("/allDoctors")
 	@ResponseStatus(value = HttpStatus.OK)
@@ -47,6 +40,14 @@ public class DoctorController {
 		DoctorDto doctorDto = doctorService.searchDoctor(id) ;
 		return doctorDto;
 	}
+	
+	
+	@PostMapping
+	@ResponseStatus(value = HttpStatus.CREATED)
+	public DoctorDto registerDoctor(@RequestBody DoctorDto doctorDto) {
+		return doctorService.registerDoctor(doctorDto);
+	}
+	
 	
 	@PutMapping
 	@ResponseStatus(value = HttpStatus.OK)
