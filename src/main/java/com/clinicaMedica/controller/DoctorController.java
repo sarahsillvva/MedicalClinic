@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,35 +29,37 @@ public class DoctorController {
 	
 	@PostMapping
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public DoctorDto registerDoctor(DoctorDto doctorDto) {
+	public DoctorDto registerDoctor(@RequestBody DoctorDto doctorDto) {
 		return doctorService.registerDoctor(doctorDto);
 	}
 	
-	/*/
+	
 	//Search list of all Doctors
-	@GetMapping
+	@GetMapping("/allDoctors")
 	@ResponseStatus(value = HttpStatus.OK)
 	public List<DoctorDto> searchDoctors() {
 		return doctorService.searchDoctors();
-	}/*/
+	}
 	
 	@GetMapping("/searchDoctor")
 	@ResponseStatus(value = HttpStatus.OK)
-	public DoctorDto searchDoctor(@RequestParam (name="doctor_id") Long doctorId) {
-		return doctorService.searchDoctor(doctorId);
+	public DoctorDto searchDoctor(@RequestParam (name="id") Long id) {
+		DoctorDto doctorDto = doctorService.searchDoctor(id) ;
+		return doctorDto;
 	}
 	
 	@PutMapping
 	@ResponseStatus(value = HttpStatus.OK)
-	public DoctorDto updateDoctor(DoctorDto doctorDto) {
-		return doctorService.updateDoctor(doctorDto);
+	public DoctorDto updateDoctor(@RequestBody DoctorDto doctorDto) {
+		doctorService.updateDoctor(doctorDto);
+		return doctorDto;
 	}
-	/*
+	
 	@DeleteMapping
 	@ResponseStatus (value= HttpStatus.NO_CONTENT)
-	public void deleteDoctor(@RequestParam (name="doctor_id") Long doctorId) {
-		doctorService.deleteDoctor(doctorId);
+	public void deleteDoctor(@RequestParam (name="id") Long id) {
+		doctorService.deleteDoctor(id);
 	}
-	*/
+	
 	
 }

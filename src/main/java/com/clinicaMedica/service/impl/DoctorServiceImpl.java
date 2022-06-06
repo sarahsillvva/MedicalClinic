@@ -1,11 +1,14 @@
 package com.clinicaMedica.service.impl;
 
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.clinicaMedica.Error.ResourceNotFoundException;
 import com.clinicaMedica.dto.DoctorDto;
 import com.clinicaMedica.mapper.DoctorMapper;
 import com.clinicaMedica.model.Doctor;
@@ -20,70 +23,67 @@ public class DoctorServiceImpl  implements DoctorService{
 	
 	DoctorMapper doctorMapper;
 	// FIND ALL REGISTERED DOCTORS
-	/*@Override
+	
 	public List<DoctorDto> searchDoctors() {
-		List<Doctor> search = doctorRepository.findAll();
-	return doctorRepository.findAll();
-	}*/
+		List<Doctor> doctors = doctorRepository.findAll();
+		List<DoctorDto> doctorDto = doctors.stream().map(d-> new DoctorDto(d)).collect(Collectors.toList());
+		
+		return doctorDto;
+	}
 	
 	
 	// SEARCH WITH ID OF DOCTOR
 	@Override
-	public DoctorDto searchDoctor(Long doctorId) {
-		try {
-			Doctor doctor = doctorRepository.findById(doctorId).get();
-			return doctorMapper.toDto(doctor);
-		}catch (Exception e) {
-			throw new IllegalArgumentException("Erro. Search doctor not completed");
-		}	
+	public DoctorDto searchDoctor(Long id) {
+			Optional<Doctor> doctor = doctorRepository.findById(id);
+			if (doctor.isPresent()) {
+				Doctor response= doctorRepository.findById(id).get();
+				DoctorDto doctorDto = new DoctorDto(response);
+				return doctorDto;
+			}
+			else throw new ResourceNotFoundException("Doctor id: "+ id + " Not found" );
 	}
 	
 	
 	// REGISTER NEW DOCTOR
 	public  DoctorDto registerDoctor(DoctorDto doctorDto) {
-		
-		Doctor doctor  = doctorMapper.toDoctor(doctorDto);
+		Doctor doctor  = new Doctor(doctorDto);
 		doctor = doctorRepository.save(doctor);
-		return doctorMapper.toDto(doctor);
+		doctorDto = new DoctorDto(doctor);
+		return doctorDto;
 	}
 
 	
 	// UPDATE DOCTOR WITH ID
 	public DoctorDto updateDoctor(DoctorDto doctorDto) {
-		try {
-			
-			Doctor doctor = doctorMapper.toDoctor(searchDoctor(doctorDto.getId()));
+		try {			
+			Doctor doctor = new Doctor(searchDoctor(doctorDto.getId()));
 			if(doctor!=null) {
+				doctor =new Doctor(doctorDto);
 				doctor = doctorRepository.save(doctor);
-				return doctorMapper.toDto(doctor);
+				doctorDto = new DoctorDto(doctor);
 			}
-			else 
-				throw new IllegalArgumentException("Doctor not found");
-				
+			return doctorDto;
 		}catch (Exception e) {
-			 throw new IllegalArgumentException("Erro. Update doctor not completed");
+			 throw new ResourceNotFoundException("Erro. Update doctor not completed ");
 		}
 		
 	}
 
 	//DELETE DOCTOR WITH ID
-	/*
-	@Override  
-	public void deleteDoctor(Long doctorId) {
+	public void deleteDoctor(Long id) {
 		try {
-			Doctor doctor = doctorRepository.findById(doctorId).get();
-			if(doctor!=null) {
-				doctor = doctorRepository.deleteById(doctorId);
-				doctorMapper.toDto(doctor);
+			Optional<Doctor> doctor = doctorRepository.findById(id);
+			if(doctor.isPresent()) {		
+				doctorRepository.deleteById(id);
 			}
 			else {
-				throw new IllegalArgumentException("Doctor not found");
+				throw new ResourceNotFoundException("Doctor: "+ id +" not found");
 			}
 		} catch (Exception e) {
-			throw new IllegalArgumentException("Erro. Delete doctor not completed");
+			throw new ResourceNotFoundException("Erro. Delete doctor not completed");
 		}
 	}
-	*/
 
 
 

@@ -1,31 +1,39 @@
 package com.clinicaMedica.dto;
 
+
+import com.clinicaMedica.model.Doctor;
 import com.clinicaMedica.model.Patient;
 
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter 
+@Setter
 public class DoctorDto {
 
-	
-	@Getter
 	private Long id;
 	
-	@Getter @Setter
 	private String name;
-	
-	@Getter @Setter
+
 	private String address;
 	
-	@Getter @Setter
 	private String crm;
 	
-	@Getter @Setter
 	private String especialition;
 	
-	@Getter @Setter
 	private Patient patient;
+	
+
 
 	public DoctorDto() {}
+
+	public DoctorDto(Doctor doctor) {
+		id = doctor.getId();
+		name = doctor.getName();
+		address = doctor.getAddress();
+		crm = doctor.getCrm();
+		especialition = doctor.getEspecialition();
+		patient = doctor.getPatient();
+	}
 	
 }

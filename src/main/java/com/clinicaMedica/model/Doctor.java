@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.clinicaMedica.dto.DoctorDto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -38,6 +39,18 @@ public class Doctor {
 	private Patient patient;
 	
 	public Doctor() {}
+
+
+
+	public Doctor(DoctorDto doctorDto) {
+		id = doctorDto.getId();
+		name = doctorDto.getName();
+		address = doctorDto.getAddress();
+		crm = doctorDto.getCrm();
+		especialition = doctorDto.getEspecialition();
+		patient = doctorDto.getPatient();
+	}
+
 	
 	
 }

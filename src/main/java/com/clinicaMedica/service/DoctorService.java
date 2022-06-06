@@ -9,14 +9,14 @@ import com.clinicaMedica.dto.DoctorDto;
 @Service
 public interface DoctorService {
 
-	//public List<DoctorDto> searchDoctors();
+	public List<DoctorDto> searchDoctors();
 	
-	public DoctorDto searchDoctor(Long doctorId);
+	public DoctorDto searchDoctor(Long id);
 	
 	public DoctorDto registerDoctor	(DoctorDto doctorDto);
 	
 	public DoctorDto updateDoctor (DoctorDto doctorDto);
 	
-	//public void deleteDoctor (Long doctorId);
+	public void deleteDoctor (Long id);
 	
 }
