@@ -28,6 +28,7 @@ public class PatientDto {
 		super();
 	}
 
+	
 	public PatientDto(Patient patient) {
 		this.id = patient.getId();
 		this.name = patient.getName();

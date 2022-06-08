@@ -29,7 +29,6 @@ public class PatientController {
 	
 	@GetMapping("/searchById")
 	public PatientDto searchPatient(@RequestParam(name="id")Long id) {
-		
 		return patientService.searchPatient(id);
 	}
 	

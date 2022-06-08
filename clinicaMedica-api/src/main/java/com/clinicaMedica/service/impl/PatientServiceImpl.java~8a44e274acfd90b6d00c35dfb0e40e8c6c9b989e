@@ -6,14 +6,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.clinicaMedica.Error.ResourceNotFoundException;
 import com.clinicaMedica.dto.PatientDto;
 import com.clinicaMedica.model.Patient;
 import com.clinicaMedica.repository.PatientRepository;
 import com.clinicaMedica.service.PatientService;
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+
 @Component
 public class PatientServiceImpl implements PatientService{
 
@@ -24,7 +23,7 @@ public class PatientServiceImpl implements PatientService{
 	public List<PatientDto> searchPatients() {
 		List<Patient> patients = patientRepository.findAll();
 		List<PatientDto> patientDto = patients.stream().map(p-> new PatientDto(p)).collect(Collectors.toList());
-
+	
 		return patientDto;
 	}
 	
